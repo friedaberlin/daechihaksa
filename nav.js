@@ -251,6 +251,50 @@
   function initHaksaModal() {
     if (!document.querySelector('.grid')) return;
 
+    // CSS 캐시 이슈 방어 — 모달 핵심 스타일을 JS로 직접 주입
+    if (!document.getElementById('haksa-modal-styles')) {
+      const css = document.createElement('style');
+      css.id = 'haksa-modal-styles';
+      css.textContent = `
+        #haksa-modal .modal-panel {
+          aspect-ratio: 4 / 5;
+          height: min(88vh, 820px);
+          width: auto;
+          max-width: calc(100vw - 32px);
+          padding: 0;
+          overflow: hidden;
+          display: flex;
+          flex-direction: column;
+        }
+        #haksa-modal .haksa-gallery {
+          position: relative !important;
+          flex: 1 1 auto;
+          min-height: 0;
+          background: #1a1a1a;
+          overflow: hidden;
+        }
+        #haksa-modal .haksa-gallery .slide {
+          position: absolute !important;
+          inset: 0 !important;
+          opacity: 0;
+          transition: opacity 280ms ease;
+          pointer-events: none;
+        }
+        #haksa-modal .haksa-gallery .slide.active {
+          opacity: 1 !important;
+          pointer-events: auto;
+        }
+        #haksa-modal .haksa-gallery img {
+          width: 100% !important;
+          height: 100% !important;
+          object-fit: contain !important;
+          object-position: center;
+          display: block;
+        }
+      `;
+      document.head.appendChild(css);
+    }
+
     // Inject modal markup once
     let modal = document.getElementById('haksa-modal');
     if (!modal) {
