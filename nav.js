@@ -220,18 +220,37 @@
 
     form.addEventListener('submit', (e) => {
       e.preventDefault();
-      // Basic validation: native required + show success
       if (!form.checkValidity()) {
         form.reportValidity();
         return;
       }
-      // TODO: DB 연결 시 fetch POST 로 교체
-      // const data = Object.fromEntries(new FormData(form).entries());
-      // fetch('/api/application', { method:'POST', body: JSON.stringify(data) })
 
-      form.style.display = 'none';
-      foot.style.display = 'none';
-      success.classList.add('show');
+      const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw-pj6jg0RqDZd3YwnK_SOFiYRxFJM2vKjHDKaldZ06IP6nrf2Zmu68-JqQ4m5HPiZQkQ/exec';
+      const data = Object.fromEntries(new FormData(form).entries());
+
+      // 제출 버튼 비활성화 + 로딩 표시
+      const submitBtn = document.querySelector('[form="application-form"]');
+      const origLabel = submitBtn ? submitBtn.textContent : '';
+      if (submitBtn) { submitBtn.disabled = true; submitBtn.textContent = '전송 중...'; }
+
+      // CORS preflight 회피를 위해 text/plain 으로 전송 (Apps Script가 e.postData.contents 로 받음)
+      fetch(APPS_SCRIPT_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(data),
+      })
+        .then(() => {
+          form.style.display = 'none';
+          foot.style.display = 'none';
+          success.classList.add('show');
+        })
+        .catch(err => {
+          console.error('신청서 전송 실패:', err);
+          alert('전송에 실패했습니다. 잠시 후 다시 시도해 주세요.');
+        })
+        .finally(() => {
+          if (submitBtn) { submitBtn.disabled = false; submitBtn.textContent = origLabel; }
+        });
     });
 
     // Wire up triggers — event delegation으로 동적 카드도 커버
