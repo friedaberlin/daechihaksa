@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>대치학사닷컴 — 소개</title>
+<title>대치학사닷컴</title>
 <link rel="stylesheet" href="styles.css" />
 <style>
   /* ---------- Hero ---------- */
@@ -30,15 +30,13 @@
   .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
   .hero-art {
     aspect-ratio: 4/5; border-radius: var(--radius-lg);
-    background:
-      linear-gradient(135deg, oklch(94% 0.015 85), oklch(90% 0.02 85));
+    background: linear-gradient(135deg, oklch(94% 0.015 85), oklch(90% 0.02 85));
     border: 1px solid var(--border);
     position: relative; overflow: hidden;
   }
   .hero-art::before {
     content: ""; position: absolute; inset: 0;
-    background-image:
-      repeating-linear-gradient(45deg, transparent 0 22px, oklch(88% 0.015 85) 22px 23px);
+    background-image: repeating-linear-gradient(45deg, transparent 0 22px, oklch(88% 0.015 85) 22px 23px);
     opacity: .6;
   }
   .hero-art-card {
@@ -67,23 +65,18 @@
     .hero-art { aspect-ratio: 5/4; max-width: 520px; }
   }
 
-  /* ---------- Problems ---------- */
+  /* Problems */
   .problems { background: var(--bg-tint); }
-  .problem-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
-  }
+  .problem-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
   .problem-card {
     background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 32px 28px;
-    transition: border-color var(--t-fast), transform var(--t-fast);
+    border-radius: var(--radius); padding: 32px 28px;
+    transition: border-color var(--t-fast);
   }
   .problem-card:hover { border-color: var(--border-strong); }
   .problem-card .num {
-    font-family: 'Times New Roman', serif;
-    font-style: italic;
-    font-size: 32px; color: var(--accent);
-    font-weight: 400;
+    font-family: 'Times New Roman', serif; font-style: italic;
+    font-size: 32px; color: var(--accent); font-weight: 400;
     margin-bottom: 18px; display: block;
   }
   .problem-card h3 {
@@ -91,11 +84,9 @@
     letter-spacing: -0.02em;
   }
   .problem-card p { margin: 0; font-size: 15px; color: var(--muted); }
-  @media (max-width: 820px) {
-    .problem-grid { grid-template-columns: 1fr; }
-  }
+  @media (max-width: 820px) { .problem-grid { grid-template-columns: 1fr; } }
 
-  /* ---------- Role / Solution ---------- */
+  /* Role */
   .role-inner { display: grid; grid-template-columns: 1fr 1.2fr; gap: 80px; align-items: start; }
   .role-inner .section-head { margin-bottom: 0; }
   .role-list { display: grid; gap: 4px; }
@@ -110,45 +101,11 @@
     color: var(--accent); letter-spacing: 0.08em;
     padding-top: 4px;
   }
-  .role-item h3 {
-    font-size: 18px; font-weight: 700; margin: 0 0 6px;
-    letter-spacing: -0.02em;
-  }
+  .role-item h3 { font-size: 18px; font-weight: 700; margin: 0 0 6px; letter-spacing: -0.02em; }
   .role-item p { margin: 0; font-size: 15px; color: var(--muted); }
-  @media (max-width: 900px) {
-    .role-inner { grid-template-columns: 1fr; gap: 40px; }
-  }
+  @media (max-width: 900px) { .role-inner { grid-template-columns: 1fr; gap: 40px; } }
 
-  /* ---------- Services ---------- */
-  .services { background: var(--bg-tint); }
-  .service-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
-  }
-  .service-card {
-    background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--radius); padding: 28px;
-    display: flex; flex-direction: column; gap: 16px;
-    min-height: 200px;
-    transition: border-color var(--t-fast);
-  }
-  .service-card:hover { border-color: var(--accent); }
-  .badge {
-    align-self: flex-start;
-    font-size: 11px; font-weight: 600; letter-spacing: 0.06em;
-    padding: 5px 10px; border-radius: 999px;
-    background: var(--accent-tint); color: var(--accent);
-  }
-  .badge.soon { background: oklch(94% 0.005 85); color: var(--muted); }
-  .service-card h3 {
-    font-size: 18px; font-weight: 700; margin: 0;
-    letter-spacing: -0.02em;
-  }
-  .service-card p { margin: 0; font-size: 14px; color: var(--muted); }
-  @media (max-width: 820px) {
-    .service-grid { grid-template-columns: 1fr; }
-  }
-
-  /* ---------- Stats ---------- */
+  /* Stats */
   .stats-inner { text-align: center; }
   .stat-grid {
     display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px;
@@ -161,8 +118,7 @@
   .stat-num {
     font-size: clamp(40px, 5.5vw, 64px);
     font-weight: 700; letter-spacing: -0.04em;
-    line-height: 1; margin-bottom: 14px;
-    color: var(--ink);
+    line-height: 1; margin-bottom: 14px; color: var(--ink);
   }
   .stat-num span { color: var(--accent); }
   .stat-label { font-size: 14px; font-weight: 600; color: var(--ink-2); margin-bottom: 6px; }
@@ -173,29 +129,21 @@
     .stat-grid > div:last-child { border-bottom: 1px solid var(--border); }
   }
 
-  /* ---------- Closing quote ---------- */
-  .quote {
-    background: var(--ink); color: var(--bg);
-    padding-block: clamp(80px, 10vw, 120px);
-  }
+  /* Quote */
+  .quote { background: var(--ink); color: var(--bg); padding-block: clamp(80px, 10vw, 120px); }
   .quote p {
     max-width: 820px; margin: 0 auto;
     font-size: clamp(22px, 3vw, 32px);
     line-height: 1.5; letter-spacing: -0.025em;
-    text-align: center; text-wrap: balance;
-    font-weight: 500;
+    text-align: center; text-wrap: balance; font-weight: 500;
   }
-  .quote p em {
-    font-style: normal;
-    color: oklch(82% 0.05 150);
-  }
+  .quote p em { font-style: normal; color: oklch(82% 0.05 150); }
 
-  /* ---------- CTA ---------- */
+  /* CTA */
   .cta-band { text-align: center; }
   .cta-band h2 {
     font-size: clamp(28px, 3.6vw, 40px);
-    letter-spacing: -0.03em; margin: 0 0 14px;
-    font-weight: 700;
+    letter-spacing: -0.03em; margin: 0 0 14px; font-weight: 700;
   }
   .cta-band p { font-size: 17px; color: var(--muted); margin: 0 0 32px; }
   .cta-band .btns { display: inline-flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
@@ -206,12 +154,11 @@
 <!-- =================== Header =================== -->
 <header class="site-header" id="hdr" data-screen-label="Header">
   <div class="wrap nav">
-    <a href="about.html" class="brand">
+    <a href="index.html" class="brand">
       <span class="brand-mark">대</span>
       <span>대치학사닷컴</span>
     </a>
     <ul class="nav-links">
-      <li><a href="about.html">소개</a></li>
       <li>
         <button class="nav-trigger" type="button">
           <span>학사 찾기</span>
@@ -249,12 +196,6 @@
         </div>
       </li>
     </ul>
-    <div class="nav-right">
-      <div class="nav-utility">
-        <a href="#">Login</a>
-        <a href="#">Basket</a>
-      </div>
-    </div>
     <button class="nav-toggle" aria-label="메뉴">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
     </button>
@@ -279,7 +220,6 @@
       </p>
       <div class="hero-cta">
         <a href="female.html" class="btn btn-primary">학사 찾기 시작 →</a>
-        <a href="#role" class="btn btn-ghost">서비스 더 알아보기</a>
       </div>
     </div>
     <div class="hero-art" aria-hidden="true">
@@ -384,53 +324,8 @@
   </div>
 </section>
 
-<!-- =================== Services =================== -->
-<section class="services" data-screen-label="04 Services">
-  <div class="wrap">
-    <div class="section-head">
-      <span class="eyebrow">제공 서비스</span>
-      <h2>대치동 수험생활 전반을 커버합니다</h2>
-      <p>현재 운영 중인 서비스와 곧 오픈하는 서비스입니다.</p>
-    </div>
-    <div class="service-grid">
-      <div class="service-card">
-        <span class="badge">운영 중</span>
-        <h3>학사 안내</h3>
-        <p>여학사, 남학사, 하숙, 원룸 등 조건별 학사 정보 및 직접 연결.</p>
-      </div>
-      <div class="service-card">
-        <span class="badge">운영 중</span>
-        <h3>학원 안내</h3>
-        <p>국어, 영어, 수학, 사탐, 과탐 — 대치동 주요 학원 정보 정리.</p>
-      </div>
-      <div class="service-card">
-        <span class="badge">운영 중</span>
-        <h3>설명회 안내</h3>
-        <p>입시설명회, 생기부설명회, 학습설명회 일정 및 정보.</p>
-      </div>
-      <div class="service-card">
-        <span class="badge soon">준비 중</span>
-        <h3>대치동 입시 소식</h3>
-        <p>유행하는 입시 정보, 학원 트렌드 등 현장 소식.</p>
-      </div>
-      <div class="service-card">
-        <span class="badge soon">준비 중</span>
-        <h3>자습시설 안내</h3>
-        <p>독서실, 스터디카페, 독재학원 등 자습 공간 정보.</p>
-      </div>
-      <div class="service-card" style="background: var(--ink); color: var(--bg); border-color: var(--ink); justify-content: space-between;">
-        <span class="badge" style="background: rgba(255,255,255,.1); color: oklch(82% 0.05 150);">함께해요</span>
-        <div>
-          <h3 style="margin-bottom: 8px;">서비스 제안</h3>
-          <p style="color: oklch(75% 0.01 85);">필요한 정보가 있으신가요? 카카오채널로 알려주세요.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
 <!-- =================== Stats =================== -->
-<section data-screen-label="05 Stats">
+<section data-screen-label="04 Stats">
   <div class="wrap stats-inner">
     <div class="section-head center">
       <span class="eyebrow center">수치로 보는 신뢰</span>
@@ -457,7 +352,7 @@
 </section>
 
 <!-- =================== Quote =================== -->
-<section class="quote" data-screen-label="06 Quote">
+<section class="quote" data-screen-label="05 Quote">
   <div class="wrap">
     <p>
       대치동에서의 시간은,<br/>
@@ -467,16 +362,13 @@
 </section>
 
 <!-- =================== CTA =================== -->
-<section id="cta" class="cta-band" data-screen-label="07 CTA">
+<section id="cta" class="cta-band" data-screen-label="06 CTA">
   <div class="wrap">
     <h2>학사 찾기, 지금 바로 시작하세요</h2>
     <p>조건을 입력하면 맞는 학사를 빠르게 안내해 드려요. 상담은 무료입니다.</p>
     <div class="btns">
       <a href="female.html" class="btn btn-primary">학사 검색하기</a>
-      <a href="#" class="btn btn-kakao">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.48 3 2 6.58 2 11c0 2.86 1.92 5.36 4.78 6.74-.21.78-.78 2.87-.89 3.32-.14.55.2.55.42.4.17-.12 2.7-1.83 3.79-2.57.62.09 1.26.14 1.9.14 5.52 0 10-3.58 10-8s-4.48-8-10-8z"/></svg>
-        카카오 상담
-      </a>
+      <a href="#" class="btn btn-ghost" data-open-inquiry="문의">문의하기</a>
     </div>
   </div>
 </section>
@@ -486,7 +378,7 @@
   <div class="wrap">
     <div class="foot-grid">
       <div class="foot-brand">
-        <a href="#" class="brand">
+        <a href="index.html" class="brand">
           <span class="brand-mark">대</span>
           <span>대치학사닷컴</span>
         </a>
@@ -495,17 +387,17 @@
       <div class="foot-col">
         <h4>고객센터</h4>
         <ul>
-          <li>02-XXX-XXXX</li>
+          <li>010 – 2700 – 2718</li>
           <li>평일 09:00 – 18:00</li>
-          <li><a href="#">카카오채널 상담</a></li>
+          <li><a href="mailto:euler2718napier@naver.com">euler2718napier@naver.com</a></li>
         </ul>
       </div>
       <div class="foot-col">
         <h4>서비스</h4>
         <ul>
-          <li><a href="female.html">학사 찾기</a></li>
-          <li><a href="#">학원 안내</a></li>
-          <li><a href="#">설명회 안내</a></li>
+          <li><a href="female.html">여학사 찾기</a></li>
+          <li><a href="male.html">남학사 찾기</a></li>
+          <li><a href="#" data-open-inquiry="관리형 멤버쉽">관리형 멤버쉽</a></li>
         </ul>
       </div>
     </div>
