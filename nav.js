@@ -240,6 +240,13 @@
       if (!trigger) return;
       e.preventDefault();
       e.stopPropagation();
+
+      // 학사 모달이 열려 있으면 먼저 닫기 (모달 갈아타기)
+      const haksaModal = document.getElementById('haksa-modal');
+      if (haksaModal && haksaModal.classList.contains('open')) {
+        haksaModal.classList.remove('open');
+      }
+
       const t = trigger.dataset.openApplication || '학사 신청서';
       open(t);
     });
@@ -322,7 +329,7 @@
               <span class="val" data-info="price">00<small>만원~</small></span>
             </div>
             <div class="actions">
-              <a href="#cta" class="btn btn-primary btn-sm" data-haksa-cta>상담 신청</a>
+              <a href="#" class="btn btn-primary btn-sm" data-haksa-cta data-open-application="학사 신청서">상담 신청</a>
             </div>
           </div>
         </div>
@@ -416,6 +423,14 @@
 
     closeBtn.addEventListener('click', closeHaksa);
     backdrop.addEventListener('click', closeHaksa);
+
+    // 모달 안의 "상담 신청" 누르면 학사 모달을 먼저 닫고 신청서 모달이 열림
+    modal.addEventListener('click', (e) => {
+      if (e.target.closest('[data-haksa-cta]')) {
+        closeHaksa();
+      }
+    });
+
     document.addEventListener('keydown', (e) => {
       if (!modal.classList.contains('open')) return;
       if (e.key === 'Escape') closeHaksa();
