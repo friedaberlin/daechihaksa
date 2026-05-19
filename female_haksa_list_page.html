@@ -1,0 +1,354 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --green: #00C471; --green-dark: #009958; --green-bg: #E8FAF3; --green-mid: #7ADDB5;
+    --magenta: #D4537E; --magenta-bg: #F7EBF1; --magenta-mid: #E8A8C0; --magenta-dark: #A83360;
+    --blue-bg: #EAF1F9; --blue-text: #2D6FA3;
+  }
+  .site { font-family: var(--font-sans); }
+
+  /* NAV */
+  .nav { background: var(--color-background-primary); border-bottom: 0.5px solid var(--color-border-tertiary); padding: 0 40px; height: 60px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+  .nav-logo { font-size: 18px; font-weight: 500; color: var(--color-text-primary); display: flex; align-items: center; gap: 8px; }
+  .nav-logo .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); }
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a { font-size: 14px; color: var(--color-text-secondary); text-decoration: none; }
+  .nav-links a.active { color: var(--color-text-primary); font-weight: 500; }
+  .nav-cta { background: var(--green); color: #fff; border: none; padding: 8px 20px; border-radius: var(--border-radius-md); font-size: 14px; cursor: pointer; font-family: var(--font-sans); font-weight: 500; }
+
+  /* PAGE HEADER */
+  .page-header {
+    background: var(--color-background-primary);
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    padding: 40px 40px 0;
+  }
+  .breadcrumb { font-size: 13px; color: var(--color-text-secondary); margin-bottom: 16px; display: flex; align-items: center; gap: 6px; }
+  .breadcrumb i { font-size: 12px; }
+  .breadcrumb a { color: var(--color-text-secondary); text-decoration: none; }
+  .breadcrumb span { color: var(--color-text-primary); }
+  .page-header-inner { display: flex; align-items: flex-end; justify-content: space-between; padding-bottom: 24px; gap: 24px; }
+  .page-header h1 { font-size: 26px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; display: flex; align-items: center; gap: 10px; }
+  .page-header p { font-size: 14px; color: var(--color-text-secondary); }
+  .gender-tabs { display: flex; gap: 0; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); overflow: hidden; flex-shrink: 0; }
+  .gender-tab { padding: 8px 20px; font-size: 13px; border: none; cursor: pointer; font-family: var(--font-sans); background: var(--color-background-primary); color: var(--color-text-secondary); }
+  .gender-tab.active-f { background: var(--magenta-bg); color: var(--magenta); font-weight: 500; }
+  .gender-tab.active-m { background: var(--blue-bg); color: var(--blue-text); font-weight: 500; }
+
+  /* FILTER BAR */
+  .filter-bar {
+    background: var(--color-background-secondary);
+    border-bottom: 0.5px solid var(--color-border-tertiary);
+    padding: 16px 40px;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  .filter-label { font-size: 12px; color: var(--color-text-secondary); margin-right: 4px; }
+  .filter-chip { padding: 6px 14px; border-radius: 999px; font-size: 13px; border: 0.5px solid var(--color-border-secondary); background: var(--color-background-primary); color: var(--color-text-secondary); cursor: pointer; font-family: var(--font-sans); }
+  .filter-chip.on { background: var(--magenta-bg); color: var(--magenta); border-color: var(--magenta-mid); }
+  .result-count { margin-left: auto; font-size: 13px; color: var(--color-text-secondary); }
+  .result-count span { color: var(--color-text-primary); font-weight: 500; }
+
+  /* GRID */
+  .list-wrap { padding: 32px 40px 56px; background: var(--color-background-secondary); }
+  .haksa-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+
+  /* CARD */
+  .haksa-card {
+    background: var(--color-background-primary);
+    border: 0.5px solid var(--color-border-tertiary);
+    border-radius: var(--border-radius-lg);
+    overflow: hidden;
+    cursor: pointer;
+  }
+  .haksa-card:hover { border-color: var(--magenta-mid); }
+
+  /* 이미지 슬라이더 영역 */
+  .card-imgs { position: relative; height: 180px; background: var(--color-background-secondary); overflow: hidden; }
+  .card-imgs img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .img-count {
+    position: absolute; bottom: 8px; right: 8px;
+    background: rgba(0,0,0,0.45); color: #fff;
+    font-size: 11px; padding: 3px 8px; border-radius: 999px;
+    display: flex; align-items: center; gap: 4px;
+  }
+  .img-count i { font-size: 12px; }
+  .card-badge-wrap { position: absolute; top: 10px; left: 10px; display: flex; gap: 6px; }
+  .cbadge { font-size: 11px; padding: 3px 8px; border-radius: 999px; font-weight: 500; }
+  .cbadge-f { background: var(--magenta); color: #fff; }
+  .cbadge-type { background: rgba(255,255,255,0.88); color: var(--color-text-primary); }
+
+  /* 카드 본문 */
+  .card-body { padding: 14px 16px 16px; }
+  .card-name { font-size: 15px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 8px; }
+  .card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 10px; }
+  .ctag { font-size: 11px; padding: 2px 8px; border-radius: 999px; background: var(--color-background-secondary); color: var(--color-text-secondary); border: 0.5px solid var(--color-border-tertiary); }
+  .card-meta { display: flex; gap: 14px; margin-bottom: 12px; }
+  .card-meta span { font-size: 12px; color: var(--color-text-secondary); display: flex; align-items: center; gap: 4px; }
+  .card-meta i { font-size: 13px; }
+  .card-footer { display: flex; align-items: center; justify-content: space-between; padding-top: 12px; border-top: 0.5px solid var(--color-border-tertiary); }
+  .card-price { font-size: 14px; font-weight: 500; color: var(--color-text-primary); }
+  .card-price .unit { font-size: 12px; color: var(--color-text-secondary); font-weight: 400; }
+  .card-btn { background: var(--magenta-bg); color: var(--magenta); border: 0.5px solid var(--magenta-mid); padding: 6px 14px; border-radius: var(--border-radius-md); font-size: 12px; font-weight: 500; cursor: pointer; font-family: var(--font-sans); }
+
+  /* NOTICE */
+  .notice-bar { background: var(--green-bg); border-top: 0.5px solid var(--green-mid); padding: 12px 40px; display: flex; align-items: center; gap: 10px; font-size: 13px; color: var(--green-dark); }
+  .notice-bar i { font-size: 16px; color: var(--green); }
+
+  /* FOOTER */
+  .footer { background: var(--color-background-primary); border-top: 0.5px solid var(--color-border-tertiary); padding: 32px 40px; display: flex; justify-content: space-between; align-items: center; }
+  .footer-brand { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px; }
+  .footer-copy  { font-size: 12px; color: var(--color-text-secondary); }
+  .footer-links { display: flex; gap: 20px; }
+  .footer-links a { font-size: 13px; color: var(--color-text-secondary); text-decoration: none; }
+  .contact-row  { display: flex; gap: 24px; align-items: center; }
+  .contact-item { display: flex; align-items: center; gap: 6px; font-size: 13px; color: var(--color-text-secondary); }
+  .contact-item i { font-size: 16px; color: var(--green); }
+</style>
+
+<h2 class="sr-only">여학사 소개 목록 페이지</h2>
+<div class="site">
+
+  <nav class="nav">
+    <div class="nav-logo"><span class="dot"></span>대치학사닷컴</div>
+    <ul class="nav-links">
+      <li><a href="#" class="active">학사 찾기</a></li>
+      <li><a href="#">학사 유형</a></li>
+      <li><a href="#">소개</a></li>
+      <li><a href="#">커뮤니티</a></li>
+    </ul>
+    <button class="nav-cta">무료 상담 신청</button>
+  </nav>
+
+  <div class="page-header">
+    <div class="breadcrumb">
+      <a href="#">홈</a>
+      <i class="ti ti-chevron-right" aria-hidden="true"></i>
+      <a href="#">학사 찾기</a>
+      <i class="ti ti-chevron-right" aria-hidden="true"></i>
+      <span>여학사</span>
+    </div>
+    <div class="page-header-inner">
+      <div>
+        <h1>
+          여학사 목록
+          <span style="font-size:14px; font-weight:400; color:var(--color-text-secondary)">30개</span>
+        </h1>
+        <p>대치동 검증 여학사만 모았어요. 사진·시설·가격을 한눈에 확인하세요.</p>
+      </div>
+      <div class="gender-tabs">
+        <button class="gender-tab active-f"><i class="ti ti-gender-female" aria-hidden="true" style="font-size:14px; margin-right:4px"></i>여학사</button>
+        <button class="gender-tab"><i class="ti ti-gender-male" aria-hidden="true" style="font-size:14px; margin-right:4px"></i>남학사</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="filter-bar">
+    <span class="filter-label">필터</span>
+    <button class="filter-chip on">전체</button>
+    <button class="filter-chip">1인실</button>
+    <button class="filter-chip">2인실</button>
+    <button class="filter-chip">식사 포함</button>
+    <button class="filter-chip">자습실</button>
+    <button class="filter-chip">단기 가능</button>
+    <button class="filter-chip">대치역 근처</button>
+    <button class="filter-chip">한티역 근처</button>
+    <span class="result-count"><span>30</span>개 학사</span>
+  </div>
+
+  <div class="list-wrap">
+    <div class="haksa-grid">
+
+      <!-- 학사 B -->
+      <div class="haksa-card">
+        <div class="card-imgs">
+          <img src="https://lh3.googleusercontent.com/vdUd_qNw3E0KKyh1mi1xGPP1M2dZqJDNOrF0AwKNxvV0e-fVG1_R8TKiZBRreZwl21Kgr5LbF6pDa3LFjG8kgAiLPxUbRmQQD3SCWJp6tnPOcM2gQr8iRA=w670-h980-n" alt="학사B 사진" />
+          <div class="card-badge-wrap">
+            <span class="cbadge cbadge-f">여학사</span>
+            <span class="cbadge cbadge-type">학사B</span>
+          </div>
+          <div class="img-count"><i class="ti ti-photo" aria-hidden="true"></i>4</div>
+        </div>
+        <div class="card-body">
+          <div class="card-name">학사 B</div>
+          <div class="card-tags">
+            <span class="ctag">2인실</span>
+            <span class="ctag">식사 포함</span>
+            <span class="ctag">자습실</span>
+          </div>
+          <div class="card-meta">
+            <span><i class="ti ti-map-pin" aria-hidden="true"></i>대치역 5분</span>
+            <span><i class="ti ti-calendar" aria-hidden="true"></i>장기·단기</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-price">월 00만원 <span class="unit">~</span></div>
+            <button class="card-btn">상담 신청</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 학사 C -->
+      <div class="haksa-card">
+        <div class="card-imgs">
+          <img src="https://lh3.googleusercontent.com/oge6RdLL6uBP56b2J1CDlPvJ25Xh85oRgMGG57S4E5l3H7A0plwWXL94joIqakz2Fc1-2aJgBI0hiSoIqakz2Fc1-2aJgBI0hiSoIqakz2=w670-h980-n" alt="학사C 사진"
+            onerror="this.style.display='none'; this.parentElement.style.background='var(--color-background-secondary)'; this.parentElement.innerHTML+='<div style=\'display:flex;align-items:center;justify-content:center;height:100%;\'><i class=\'ti ti-building\' style=\'font-size:40px;color:var(--color-text-secondary)\'></i></div>'" />
+          <div class="card-badge-wrap">
+            <span class="cbadge cbadge-f">여학사</span>
+            <span class="cbadge cbadge-type">학사C</span>
+          </div>
+          <div class="img-count"><i class="ti ti-photo" aria-hidden="true"></i>4</div>
+        </div>
+        <div class="card-body">
+          <div class="card-name">학사 C</div>
+          <div class="card-tags">
+            <span class="ctag">1인실</span>
+            <span class="ctag">식사 포함</span>
+          </div>
+          <div class="card-meta">
+            <span><i class="ti ti-map-pin" aria-hidden="true"></i>한티역 3분</span>
+            <span><i class="ti ti-calendar" aria-hidden="true"></i>장기</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-price">월 00만원 <span class="unit">~</span></div>
+            <button class="card-btn">상담 신청</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 학사 D -->
+      <div class="haksa-card">
+        <div class="card-imgs">
+          <img src="https://lh3.googleusercontent.com/ndGQPGv9lhjdMZcTVhAi03cMkQfa-I9IJByFU0rIw7gY1xieFoZD1COORL9AtPbD0G2CNJQRGHCfG2USuwljEprL8joUINlCMtjdurwFkjjXVYGhJgG7=w670-h980-n" alt="학사D 사진" />
+          <div class="card-badge-wrap">
+            <span class="cbadge cbadge-f">여학사</span>
+            <span class="cbadge cbadge-type">학사D (슈퍼맘)</span>
+          </div>
+          <div class="img-count"><i class="ti ti-photo" aria-hidden="true"></i>3</div>
+        </div>
+        <div class="card-body">
+          <div class="card-name">슈퍼맘 학사</div>
+          <div class="card-tags">
+            <span class="ctag">2인실</span>
+            <span class="ctag">자습실</span>
+          </div>
+          <div class="card-meta">
+            <span><i class="ti ti-map-pin" aria-hidden="true"></i>학원가 도보</span>
+            <span><i class="ti ti-calendar" aria-hidden="true"></i>장기·단기</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-price">월 00만원 <span class="unit">~</span></div>
+            <button class="card-btn">상담 신청</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 학사 E -->
+      <div class="haksa-card">
+        <div class="card-imgs">
+          <img src="https://lh3.googleusercontent.com/lnKSzXMzf4YOOaTRxdYkZleJRzFzSO935c57l0BfnmK1wWtR2HeSDzb-tDql_P74MtZqRfDoo6FiIzOcGhrCTtKs0dPFyggndctyi9gKuyO2QeAbLmGWm_A=w670-h980-n" alt="학사E 사진" />
+          <div class="card-badge-wrap">
+            <span class="cbadge cbadge-f">여학사</span>
+            <span class="cbadge cbadge-type">학사E (다함)</span>
+          </div>
+          <div class="img-count"><i class="ti ti-photo" aria-hidden="true"></i>3</div>
+        </div>
+        <div class="card-body">
+          <div class="card-name">다함 학사</div>
+          <div class="card-tags">
+            <span class="ctag">1인실</span>
+            <span class="ctag">식사 포함</span>
+            <span class="ctag">자습실</span>
+          </div>
+          <div class="card-meta">
+            <span><i class="ti ti-map-pin" aria-hidden="true"></i>대치역 근처</span>
+            <span><i class="ti ti-calendar" aria-hidden="true"></i>장기</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-price">월 00만원 <span class="unit">~</span></div>
+            <button class="card-btn">상담 신청</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 학사 F -->
+      <div class="haksa-card">
+        <div class="card-imgs">
+          <img src="https://lh3.googleusercontent.com/Pntx5qoVh0FsdVBy9BJDzV6UkKGdD2BMUJpTmNXf8XgCBRcgXp4whwmNVzpVfCNTUQwG0eu93hRPd3Rt5bo0ObI_ox2K7j7fGzWNicAdsuq_TM8uyNmjoQ=w670-h980-n" alt="학사F 사진" />
+          <div class="card-badge-wrap">
+            <span class="cbadge cbadge-f">여학사</span>
+            <span class="cbadge cbadge-type">학사F (다온)</span>
+          </div>
+          <div class="img-count"><i class="ti ti-photo" aria-hidden="true"></i>3</div>
+        </div>
+        <div class="card-body">
+          <div class="card-name">다온 학사</div>
+          <div class="card-tags">
+            <span class="ctag">2인실</span>
+            <span class="ctag">식사 포함</span>
+          </div>
+          <div class="card-meta">
+            <span><i class="ti ti-map-pin" aria-hidden="true"></i>한티역 근처</span>
+            <span><i class="ti ti-calendar" aria-hidden="true"></i>장기·단기</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-price">월 00만원 <span class="unit">~</span></div>
+            <button class="card-btn">상담 신청</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 학사 G -->
+      <div class="haksa-card">
+        <div class="card-imgs">
+          <img src="https://lh3.googleusercontent.com/UqX5cQV-T9sHV-YPSzrz6Fm0tCCq5OBjZ2xhICCT3fr68w_6Baa6FyQ5FahCAoP8FVwLtdKGS3xPC-F2WJvSsZZJMLUOljMiAMz4Mz74u43LzVRAZqdzfVw=w670-h980-n" alt="학사G 사진" />
+          <div class="card-badge-wrap">
+            <span class="cbadge cbadge-f">여학사</span>
+            <span class="cbadge cbadge-type">학사G (위너스)</span>
+          </div>
+          <div class="img-count"><i class="ti ti-photo" aria-hidden="true"></i>3</div>
+        </div>
+        <div class="card-body">
+          <div class="card-name">대치 위너스 프리미엄 학사</div>
+          <div class="card-tags">
+            <span class="ctag">1인실</span>
+            <span class="ctag">자습실</span>
+            <span class="ctag">프리미엄</span>
+          </div>
+          <div class="card-meta">
+            <span><i class="ti ti-map-pin" aria-hidden="true"></i>대치역 근처</span>
+            <span><i class="ti ti-calendar" aria-hidden="true"></i>장기</span>
+          </div>
+          <div class="card-footer">
+            <div class="card-price">월 00만원 <span class="unit">~</span></div>
+            <button class="card-btn">상담 신청</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 더보기 안내 카드 -->
+      <div style="grid-column: span 3; background: var(--color-background-primary); border: 0.5px dashed var(--color-border-secondary); border-radius: var(--border-radius-lg); padding: 28px; text-align: center; color: var(--color-text-secondary); font-size: 14px;">
+        <i class="ti ti-dots" aria-hidden="true" style="font-size:24px; display:block; margin-bottom:8px; color:var(--magenta-mid)"></i>
+        학사 B~LL 총 30개 · 실제 구현 시 전체 카드가 여기에 표시됩니다
+      </div>
+
+    </div>
+  </div>
+
+  <div class="notice-bar">
+    <i class="ti ti-info-circle" aria-hidden="true"></i>
+    가격·시설 정보는 학사 상황에 따라 변동될 수 있어요. 정확한 정보는 상담을 통해 확인해드립니다.
+  </div>
+
+  <footer class="footer">
+    <div><div class="footer-brand">대치학사닷컴</div><div class="footer-copy">© 2025 대치학사닷컴. All rights reserved.</div></div>
+    <div class="contact-row">
+      <div class="contact-item"><i class="ti ti-phone" aria-hidden="true"></i>02-XXX-XXXX</div>
+      <div class="contact-item"><i class="ti ti-clock" aria-hidden="true"></i>평일 09:00 – 18:00</div>
+      <div class="contact-item"><i class="ti ti-brand-kakao" aria-hidden="true"></i>카카오채널</div>
+    </div>
+    <div class="footer-links"><a href="#">이용약관</a><a href="#">개인정보처리방침</a><a href="#">공지사항</a></div>
+  </footer>
+
+</div>
