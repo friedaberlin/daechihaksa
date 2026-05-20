@@ -227,6 +227,7 @@
 
       const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw3Q_TfFHw--Zqfl9bJhpLYgiM1ypo7_jMkbIaoteJo4T-OBL_57FMrj5wCwc06aoFNoA/exec';
       const data = Object.fromEntries(new FormData(form).entries());
+      data.haksa = window._currentHaksa || '';
 
       // 제출 버튼 비활성화 + 로딩 표시
       const submitBtn = document.querySelector('[form="application-form"]');
@@ -421,7 +422,7 @@
       modal.querySelector('[data-info="attrs"]').innerHTML = attrsEl ? attrsEl.innerHTML : '';
       modal.querySelector('[data-info="meta"]').innerHTML = metaEl ? metaEl.innerHTML : '';
       modal.querySelector('[data-info="price"]').innerHTML = priceEl ? priceEl.innerHTML : '';
-
+window._currentHaksa = nameEl ? nameEl.textContent.trim() : '';
       modal.classList.add('open');
       document.body.style.overflow = 'hidden';
     }
