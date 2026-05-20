@@ -43,6 +43,30 @@
     });
   }
 
+  // ---------- 구글드라이브 링크 자동 변환 ----------
+  // 지원 형식:
+  //   https://drive.google.com/file/d/FILE_ID/view?usp=sharing
+  //   https://drive.google.com/open?id=FILE_ID
+  //   https://drive.google.com/uc?id=FILE_ID
+  //   https://docs.google.com/uc?id=FILE_ID
+  // → https://lh3.googleusercontent.com/d/FILE_ID=w1200  (CORS·핫링크 안정성 OK)
+  function convertImageUrl(url) {
+    if (!url) return '';
+    const u = url.trim();
+    // 이미 lh3.googleusercontent.com 이면 그대로
+    if (/lh3\.googleusercontent\.com/.test(u)) return u;
+
+    // /file/d/<ID>/ 패턴
+    let m = u.match(/drive\.google\.com\/file\/d\/([a-zA-Z0-9_-]{20,})/);
+    if (m) return `https://lh3.googleusercontent.com/d/${m[1]}=w1200`;
+
+    // ?id=<ID> 패턴 (open?id= / uc?id= 모두 커버)
+    m = u.match(/[?&]id=([a-zA-Z0-9_-]{20,})/);
+    if (m) return `https://lh3.googleusercontent.com/d/${m[1]}=w1200`;
+
+    return u;
+  }
+
   // ---------- 헬퍼 ----------
   const isTrue = v => /^(true|1|y|yes|✓|o|on)$/i.test(String(v).trim());
   const esc = s => String(s).replace(/[&<>"']/g, m => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
@@ -85,7 +109,7 @@
 
   function buildImages(row) {
     return [row.image1, row.image2, row.image3, row.image4, row.image5]
-      .map(s => (s || '').trim())
+      .map(s => convertImageUrl((s || '').trim()))
       .filter(Boolean);
   }
 
