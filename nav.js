@@ -225,7 +225,7 @@
         return;
       }
 
-      const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw3Q_TfFHw--Zqfl9bJhpLYgiM1ypo7_jMkbIaoteJo4T-OBL_57FMrj5wCwc06aoFNoA/exec';
+      const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw-pj6jg0RqDZd3YwnK_SOFiYRxFJM2vKjHDKaldZ06IP6nrf2Zmu68-JqQ4m5HPiZQkQ/exec';
       const data = Object.fromEntries(new FormData(form).entries());
 
       // 제출 버튼 비활성화 + 로딩 표시
