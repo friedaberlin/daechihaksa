@@ -8,7 +8,7 @@
 <style>
   /* ---------- Hero ---------- */
   .hero {
-    padding-block: clamp(80px, 12vw, 140px) clamp(72px, 10vw, 120px);
+    padding-block: clamp(40px, 6vw, 70px) clamp(72px, 10vw, 120px);
     position: relative; overflow: hidden;
   }
   .hero-inner { display: grid; grid-template-columns: 1.15fr 1fr; gap: 64px; align-items: center; }
@@ -30,17 +30,16 @@
   .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; }
   .hero-art {
     aspect-ratio: 4/5; border-radius: var(--radius-lg);
-    background: linear-gradient(135deg, oklch(94% 0.015 85), oklch(90% 0.02 85));
+    background: #1a1a1a;
     border: 1px solid var(--border);
     position: relative; overflow: hidden;
+    background-image: url('hero.jpg');
+    background-size: cover;
+    background-position: center;
   }
-  .hero-art::before {
-    content: ""; position: absolute; inset: 0;
-    background-image: repeating-linear-gradient(45deg, transparent 0 22px, oklch(88% 0.015 85) 22px 23px);
-    opacity: .6;
-  }
+  .hero-art::before { display: none; }
   .hero-art-card {
-    position: absolute; left: 24px; right: 24px; bottom: 24px;
+    position: absolute; left: 24px; right: 24px; top: 24px;
     background: var(--surface); border: 1px solid var(--border);
     border-radius: var(--radius); padding: 20px;
     display: grid; gap: 14px;
@@ -50,12 +49,13 @@
   .hero-art-card .dot {
     width: 36px; height: 36px; border-radius: 50%;
     background: var(--accent-tint); color: var(--accent);
-    display: grid; place-items: center; font-weight: 700; font-size: 13px;
+    display: grid; place-items: center; flex-shrink: 0;
   }
+  .hero-art-card .dot svg { width: 18px; height: 18px; }
   .hero-art-card .label { font-size: 13px; color: var(--muted); }
   .hero-art-card .val { font-size: 14px; font-weight: 600; }
   .hero-art-tag {
-    position: absolute; top: 24px; left: 24px;
+    position: absolute; bottom: 24px; right: 24px;
     background: var(--ink); color: var(--bg);
     padding: 8px 14px; border-radius: 999px;
     font-size: 12px; font-weight: 600; letter-spacing: 0.02em;
@@ -230,21 +230,27 @@
       <span class="hero-art-tag">검증된 학사 150+</span>
       <div class="hero-art-card">
         <div class="row">
-          <div class="dot">검</div>
+          <div class="dot">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l8 4v6c0 5-3.5 9-8 10-4.5-1-8-5-8-10V6l8-4z"/><path d="M9 12l2 2 4-4"/></svg>
+          </div>
           <div>
             <div class="label">현장 검증</div>
             <div class="val">실거주 기준 확인 완료</div>
           </div>
         </div>
         <div class="row">
-          <div class="dot">상</div>
+          <div class="dot">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+          </div>
           <div>
             <div class="label">맞춤 상담</div>
             <div class="val">조건에 맞는 학사 직접 연결</div>
           </div>
         </div>
         <div class="row">
-          <div class="dot">통</div>
+          <div class="dot">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13S3 17 3 10a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
           <div>
             <div class="label">통합 안내</div>
             <div class="val">학원·독서실·식사·교통까지</div>
