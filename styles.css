@@ -253,6 +253,14 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
 }
 .modal-contact-row {
   display: flex; align-items: center; gap: 14px;
+  min-width: 0;
+}
+.modal-contact-row > div:last-child { min-width: 0; flex: 1; }
+.modal-contact-row a.val {
+  word-break: break-all;
+  overflow-wrap: anywhere;
+  display: inline-block;
+  max-width: 100%;
 }
 .modal-contact-ico {
   flex-shrink: 0;
@@ -549,7 +557,7 @@ button { font: inherit; cursor: pointer; border: none; background: none; color: 
   border: 1px solid var(--border-strong);
 }
 .btn-ghost:hover { border-color: var(--ink); }
-.btn-kakao { background: #FEE500; color: #181600; }
+.btn-kakao { background: #FEE500; color: #181600; display: none; }
 .btn-kakao:hover { background: #FFD600; }
 .btn-sm { padding: 10px 16px; font-size: 14px; }
 
