@@ -42,6 +42,9 @@
     if (!m) return;
     const t = m.querySelector('[data-modal-title]');
     if (t && title) t.textContent = title;
+    // 일반 "문의"인 경우 관리형 멤버쉽 아이브로우 숨김
+    const eyebrow = m.querySelector('.modal-eyebrow');
+    if (eyebrow) eyebrow.style.display = (title === '문의') ? 'none' : '';
     m.classList.add('open');
     document.body.style.overflow = 'hidden';
   }
@@ -100,6 +103,13 @@
             <p>접수 후 1–2영업일 내에 담당자가 연락드립니다. <span style="color:#d04e4e;">*</span> 표시는 필수 항목입니다.</p>
           </div>
           <form class="app-form" id="application-form" novalidate>
+            <div class="app-section" id="app-haksa-context" style="display:none;">
+              <div class="app-section-title">신청 학사</div>
+              <div class="app-field">
+                <input class="app-input" type="text" id="app-haksa-name" readonly style="background:var(--bg-tint);font-weight:600;" />
+                <input type="hidden" name="haksa" id="app-haksa-hidden" />
+              </div>
+            </div>
             <div class="app-section">
               <div class="app-section-title">학생 정보</div>
               <div class="app-field">
@@ -195,12 +205,27 @@
     const foot = modal.querySelector('.app-foot');
     const titleEl = modal.querySelector('[data-app-title]');
 
-    function open(title) {
+    function open(title, haksaName) {
       // Reset state
       success.classList.remove('show');
       form.style.display = '';
       foot.style.display = '';
       if (title) titleEl.textContent = title;
+
+      // 학사 prefill
+      const ctx = modal.querySelector('#app-haksa-context');
+      const nameInput = modal.querySelector('#app-haksa-name');
+      const hidden = modal.querySelector('#app-haksa-hidden');
+      if (haksaName) {
+        ctx.style.display = '';
+        nameInput.value = haksaName;
+        hidden.value = haksaName;
+      } else {
+        ctx.style.display = 'none';
+        nameInput.value = '';
+        hidden.value = '';
+      }
+
       modal.classList.add('open');
       document.body.style.overflow = 'hidden';
     }
@@ -225,9 +250,8 @@
         return;
       }
 
-      const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw3Q_TfFHw--Zqfl9bJhpLYgiM1ypo7_jMkbIaoteJo4T-OBL_57FMrj5wCwc06aoFNoA/exec';
+      const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbw-pj6jg0RqDZd3YwnK_SOFiYRxFJM2vKjHDKaldZ06IP6nrf2Zmu68-JqQ4m5HPiZQkQ/exec';
       const data = Object.fromEntries(new FormData(form).entries());
-      data.haksa = window._currentHaksa || '';
 
       // 제출 버튼 비활성화 + 로딩 표시
       const submitBtn = document.querySelector('[form="application-form"]');
@@ -268,7 +292,16 @@
       }
 
       const t = trigger.dataset.openApplication || '학사 신청서';
-      open(t);
+
+      // 학사 prefill: 학사 모달에서 전이된 값, 또는 클릭한 카드의 이름
+      let haksa = window.__pendingHaksa || '';
+      window.__pendingHaksa = '';
+      if (!haksa) {
+        const card = trigger.closest('.card');
+        if (card) haksa = card.querySelector('.card-name')?.textContent.trim() || '';
+      }
+
+      open(t, haksa);
     });
   }
 
@@ -346,7 +379,7 @@
           <div class="haksa-foot">
             <div class="price-block">
               <span class="from">월 이용료</span>
-              <span class="val" data-info="price">00<small>만원~</small></span>
+              <span class="val" data-info="price">가격 문의</span>
             </div>
             <div class="actions">
               <a href="#" class="btn btn-primary btn-sm" data-haksa-cta data-open-application="학사 신청서">상담 신청</a>
@@ -421,8 +454,9 @@
       modal.querySelector('[data-info="name"]').textContent = nameEl ? nameEl.textContent.trim() : '';
       modal.querySelector('[data-info="attrs"]').innerHTML = attrsEl ? attrsEl.innerHTML : '';
       modal.querySelector('[data-info="meta"]').innerHTML = metaEl ? metaEl.innerHTML : '';
-      modal.querySelector('[data-info="price"]').innerHTML = priceEl ? priceEl.innerHTML : '';
-window._currentHaksa = nameEl ? nameEl.textContent.trim() : '';
+      // 가격은 카드에서 가져오지 않고 항상 "가격 문의" 고정
+      modal.querySelector('[data-info="price"]').innerHTML = '가격 문의';
+
       modal.classList.add('open');
       document.body.style.overflow = 'hidden';
     }
@@ -444,9 +478,13 @@ window._currentHaksa = nameEl ? nameEl.textContent.trim() : '';
     closeBtn.addEventListener('click', closeHaksa);
     backdrop.addEventListener('click', closeHaksa);
 
-    // 모달 안의 "상담 신청" 누르면 학사 모달을 먼저 닫고 신청서 모달이 열림
+    // 학사 모달 안의 "상담 신청" 누르면 학사 모달을 먼저 닫고 신청서 모달이 열림
+    // 그리고 어떤 학사인지 prefill
     modal.addEventListener('click', (e) => {
       if (e.target.closest('[data-haksa-cta]')) {
+        const haksaName = modal.querySelector('[data-info="name"]')?.textContent.trim() || '';
+        if (window.__pendingHaksa !== undefined) window.__pendingHaksa = haksaName;
+        else window.__pendingHaksa = haksaName;
         closeHaksa();
       }
     });
