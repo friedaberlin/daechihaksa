@@ -88,11 +88,9 @@
   }
 
   function buildAttrs(row) {
+    // 1인실만 표시 (다른 태그는 숨김)
     const attrs = [];
-    if (row.room_type) attrs.push(row.room_type);
-    if (isTrue(row.meal)) attrs.push('식사 포함');
-    if (isTrue(row.study_room)) attrs.push('자습실');
-    if (isTrue(row.short_term)) attrs.push('단기 가능');
+    if (row.room_type && /1\s*인/.test(row.room_type)) attrs.push('1인실');
     return attrs;
   }
 
@@ -143,7 +141,7 @@
       <div class="card-foot">
         <div class="price">
           <span class="from">월 이용료</span>
-          <span class="val">${esc(row.price || '00')}<small>만원~</small></span>
+          <span class="val">가격 문의</span>
         </div>
         <a href="#" class="btn btn-primary btn-sm" data-open-application="학사 신청서">상담 신청</a>
       </div>
