@@ -106,7 +106,11 @@
   }
 
   function buildImages(row) {
-    return [row.image1, row.image2, row.image3, row.image4, row.image5]
+   return [row.image1, row.image2, row.image3, row.image4, row.image5,
+        row.image6, row.image7, row.image8, row.image9, row.image10,
+        row.image11, row.image12, row.image13, row.image14, row.image15,
+        row.image16, row.image17, row.image18, row.image19, row.image20]
+
       .map(s => convertImageUrl((s || '').trim()))
       .filter(Boolean);
   }
